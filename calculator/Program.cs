@@ -23,7 +23,7 @@ namespace Calculator
 
                 // проверка и сразу парсинг двух наших чисел
                 if (!float.TryParse(numberOnly[0], out float first) || 
-                    !float.TryParse(numberOnly[1], out float second)) // если выражение == false, то выполняем внутренний код
+                    !float.TryParse(numberOnly[1], out float second))
                     { 
                         Console.WriteLine("неверный ввод"); 
                         continue; 
