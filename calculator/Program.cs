@@ -34,7 +34,7 @@ namespace Calculator
                 int index = cleanInput.IndexOfAny(simbol); // создаём переменную, куда вставляем номер ячейки найденного методом знака
                 char currentOperator = cleanInput[index]; // теперь в другую переменную ложим наш знак
 
-                switch (currentOperator) // current -- текущий
+                switch (currentOperator) // currentOperator -- текущийОператор
                 {
                     case '+':
                         result = first + second; break;
