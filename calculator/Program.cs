@@ -44,7 +44,8 @@ namespace Calculator
                 // просто сделал его код чуть более чистым, чтобы его было возможно прочесть другому человеку.
                 int indexSimbol = cleanInput.IndexOfAny(operators); // находим индекс знака
 
-                if (indexSimbol == -1) 
+                // проверка на наличие знака
+                if (indexSimbol == -1) // indexSimbol возвращает -1, если не находит его
                 { 
                     ErrorLog("ОШИБКА: НЕ НАЙДЕН ЗНАК ОПЕРАЦИИ"); 
                     continue;
