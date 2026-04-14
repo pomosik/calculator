@@ -7,7 +7,14 @@ namespace Calculator
         static void Main(string[] args)
         {
 
-            char[] simbol = { '+', '-', '*', '/', '^' }; 
+            char[] operators = { '+', '-', '*', '/', '^' }; 
+            
+            void ErrorLog(string text) // добавил прикольный метод
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\n{text}\n");
+                Console.ResetColor();
+            } 
 
             while (true)
             {
@@ -15,24 +22,51 @@ namespace Calculator
                 Console.WriteLine("Калькулятор:\n");
                 string? dirtyInput = Console.ReadLine(); // ? -- говорим компилятору, что мы в курсе возможного null в input. 
 
-                if (dirtyInput == null) { continue; } // при null возвращаемся в самое начало цикла через continue
+                // проверка на null и пустой ввод
+                if (dirtyInput == null)
+                {
+                    ErrorLog("ОШИБКА: null");
+                    continue;
+                }
+
+                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам
+                {
+                    ErrorLog("ОШИБКА: пустой ввод");
+                    continue;
+                }
+
 
                 string cleanInput = dirtyInput.Replace(" ", ""); // заменяем(Replace) все строки " ", наш пробел, на ""
 
-                string[] numberOnly = cleanInput.Split(simbol); // разбиваем(Split) строку cleanInput на массив, который ложим в numberOnly
+                // обновление. получаем first и second через индексы
+                int indexSimbol = cleanInput.IndexOfAny(operators); // находим индекс знака
+
+                if (indexSimbol == -1) 
+                { 
+                    ErrorLog("ОШИБКА: НЕ НАЙДЕН ЗНАК ОПЕРАЦИИ"); 
+                    continue;
+                }
+
+                int firstStart = 0;
+                int secondStart = indexSimbol + 1;
+                
+                int firstLength = indexSimbol;
+                int secondLength = cleanInput.Length - secondStart;
+
+                string firstStr = cleanInput.Substring(firstStart, firstLength);
+                string secondStr = cleanInput.Substring(secondStart, secondLength);
 
                 // проверка и сразу парсинг двух наших чисел
-                if (!float.TryParse(numberOnly[0], out float first) || 
-                    !float.TryParse(numberOnly[1], out float second))
+                if (!float.TryParse(firstStr, out float first) || 
+                    !float.TryParse(secondStr, out float second))
                     { 
-                        Console.WriteLine("неверный ввод"); 
+                        ErrorLog("ОШИБКА: НЕВЕРНЫЙ ФОРМАТ ЧИСЛА"); 
                         continue; 
                     }
 
                 // финальные вычесления
                 float result = 0;
-                int index = cleanInput.IndexOfAny(simbol); // создаём переменную, куда вставляем номер ячейки найденного методом знака
-                char currentOperator = cleanInput[index]; // теперь в другую переменную ложим наш знак
+                char currentOperator = cleanInput[indexSimbol]; // теперь в другую переменную ложим наш знак
 
                 switch (currentOperator) // currentOperator -- текущийОператор
                 {
@@ -45,7 +79,7 @@ namespace Calculator
                     case '/':
                         if (second == 0)
                         {
-                            Console.WriteLine("На ноль делить нельзя!");
+                            ErrorLog("ОШИБКА: ДЕЛЕНИЕ НА НОЛЬ НЕВОЗМОЖНО"); 
                             continue;
                         }
                         result = first / second; break;
