@@ -9,7 +9,7 @@ namespace Calculator
         static void Main(string[] args)
         {
 
-            char[] operators = { '+', '-', '*', '/', '^' }; 
+            char[] operators = { '+', '-', '*', '/', '^' }; // переименовал в operators
             
             void ErrorLog(string text) // добавил прикольный метод. обычный Console.WriteLine, но с изменением цвета.
             {
@@ -31,7 +31,8 @@ namespace Calculator
                     continue;
                 }
 
-                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам. возможно, это чутка костыльно
+                // тут проверка на пустой ввод
+                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам. возможно, это чутка костыльно, но я не вижу другого решения
                 {
                     ErrorLog("ОШИБКА: пустой ввод");
                     continue;
@@ -39,7 +40,8 @@ namespace Calculator
 
                 string cleanInput = dirtyInput.Replace(" ", ""); // заменяем(Replace) все строки " ", наш пробел, на ""
 
-                // тут по новому находим first и second. я скопировал идею Смита с .Substring, просто сделал его код более чистым, чтобы его мог прочесть другой человек.
+                // тут по новому находим first и second. я скопировал идею Смита с .Substring, 
+                // просто сделал его код чуть более чистым, чтобы его было возможно прочесть другому человеку.
                 int indexSimbol = cleanInput.IndexOfAny(operators); // находим индекс знака
 
                 if (indexSimbol == -1) 
@@ -66,8 +68,8 @@ namespace Calculator
                     }
 
                 // финальные вычесления
-                float result = 0;
-                char currentOperator = cleanInput[indexSimbol]; // теперь в другую переменную ложим наш знак
+                float result = 0; 
+                char currentOperator = cleanInput[indexSimbol]; // находим индекс, на котором лежит наш опереатор
 
                 switch (currentOperator) // currentOperator -- текущийОператор
                 {
