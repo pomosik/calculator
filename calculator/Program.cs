@@ -1,5 +1,3 @@
-// Вечером попробую добавить в это чудо классы.
-
 using System;
 
 namespace Calculator
@@ -9,9 +7,9 @@ namespace Calculator
         static void Main(string[] args)
         {
 
-            char[] operators = { '+', '-', '*', '/', '^' }; // переименовал в operators
+            char[] operators = { '+', '-', '*', '/', '^' };
             
-            void ErrorLog(string text) // добавил прикольный метод. обычный Console.WriteLine, но с изменением цвета.
+            void ErrorLog(string text)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"\n{text}\n");
@@ -22,30 +20,25 @@ namespace Calculator
             {
 
                 Console.WriteLine("Калькулятор:\n");
-                string? dirtyInput = Console.ReadLine(); // ? -- говорим компилятору, что мы в курсе возможного null в input. 
+                string? dirtyInput = Console.ReadLine();
 
-                // проверка на null и пустой ввод
                 if (dirtyInput == null)
                 {
                     ErrorLog("ОШИБКА: null");
                     continue;
                 }
-
-                // тут проверка на пустой ввод
-                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам. возможно, это чутка костыльно, но я не вижу другого решения
+                
+                if (dirtyInput.Trim() == "")
                 {
                     ErrorLog("ОШИБКА: пустой ввод");
                     continue;
                 }
 
-                string cleanInput = dirtyInput.Replace(" ", ""); // заменяем(Replace) все строки " ", наш пробел, на ""
+                string cleanInput = dirtyInput.Replace(" ", "")
 
-                // тут по новому находим first и second. я скопировал идею Смита с .Substring, 
-                // просто сделал его код чуть более чистым, чтобы его было возможно прочесть другому человеку.
-                int indexSimbol = cleanInput.IndexOfAny(operators); // находим индекс знака
+                int indexSimbol = cleanInput.IndexOfAny(operators);
 
-                // проверка на наличие знака
-                if (indexSimbol == -1) // indexSimbol возвращает -1, если не находит его
+                if (indexSimbol == -1)
                 { 
                     ErrorLog("ОШИБКА: НЕ НАЙДЕН ЗНАК ОПЕРАЦИИ"); 
                     continue;
@@ -60,19 +53,17 @@ namespace Calculator
                 string firstStr = cleanInput.Substring(firstStart, firstLength);
                 string secondStr = cleanInput.Substring(secondStart, secondLength);
 
-                // проверка и сразу парсинг двух наших чисел
                 if (!float.TryParse(firstStr, out float first) || 
                     !float.TryParse(secondStr, out float second))
                     { 
                         ErrorLog("ОШИБКА: НЕВЕРНЫЙ ФОРМАТ ЧИСЛА"); 
                         continue; 
                     }
-
-                // финальные вычесления
+                
                 float result = 0; 
-                char currentOperator = cleanInput[indexSimbol]; // находим индекс, на котором лежит наш опереатор
+                char currentOperator = cleanInput[indexSimbol];
 
-                switch (currentOperator) // currentOperator -- текущийОператор
+                switch (currentOperator)
                 {
                     case '+':
                         result = first + second; break;
@@ -88,10 +79,10 @@ namespace Calculator
                         }
                         result = first / second; break;
                     case '^':
-                        result = (float)Math.Pow(first, second); break; // автоматически Math.Pow работает с типом double
+                        result = (float)Math.Pow(first, second); break;
                 }
 
-                Console.WriteLine($"{result}\n"); // вывод результата с создание дополнительной пустой строки снизу
+                Console.WriteLine($"{result}\n");
 
             }
         }
