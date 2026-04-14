@@ -11,7 +11,7 @@ namespace Calculator
 
             char[] operators = { '+', '-', '*', '/', '^' }; 
             
-            void ErrorLog(string text) // добавил прикольный метод
+            void ErrorLog(string text) // добавил прикольный метод. обычный Console.WriteLine, но с изменением цвета.
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"\n{text}\n");
@@ -31,16 +31,15 @@ namespace Calculator
                     continue;
                 }
 
-                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам
+                if (dirtyInput.Trim() == "") // .Trim -- срезает пробелы по бокам. возможно, это чутка костыльно
                 {
                     ErrorLog("ОШИБКА: пустой ввод");
                     continue;
                 }
 
-
                 string cleanInput = dirtyInput.Replace(" ", ""); // заменяем(Replace) все строки " ", наш пробел, на ""
 
-                // обновление. получаем first и second через индексы
+                // тут по новому находим first и second. я скопировал идею Смита с .Substring, просто сделал его код более чистым, чтобы его мог прочесть другой человек.
                 int indexSimbol = cleanInput.IndexOfAny(operators); // находим индекс знака
 
                 if (indexSimbol == -1) 
