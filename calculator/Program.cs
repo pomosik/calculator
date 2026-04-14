@@ -1,4 +1,6 @@
-﻿using System;
+// Вечером попробую добавить в это чудо классы.
+
+using System;
 
 namespace Calculator
 {
