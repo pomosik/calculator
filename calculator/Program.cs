@@ -34,7 +34,7 @@ namespace Calculator
                     continue;
                 }
 
-                string cleanInput = dirtyInput.Replace(" ", "")
+                string cleanInput = dirtyInput.Replace(" ", "");
 
                 int indexSimbol = cleanInput.IndexOfAny(operators);
 
